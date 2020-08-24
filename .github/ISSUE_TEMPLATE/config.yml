@@ -1,0 +1,4 @@
+contact_links:
+  - name: Requests For Comments [RFCs]
+    url: https://github.com/ekipse/rfcs
+    about: If you want to suggest a new feature, a change in architecture, or just about any change to the code other than a bugfix, please follow this link.
