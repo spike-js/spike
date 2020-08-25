@@ -1,6 +1,6 @@
-# Ekipse
+# Spike
 
-A simple SSG, that doesn't scale, for the small projects that need a tool just for them.
+A simple SSG, that doesn't scale, for the small projects that need a tool that just works, and works forever.
 
 ## Why?
 
