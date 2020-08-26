@@ -1,16 +1,16 @@
 {
   "private": true,
   "version": "0.1.0",
-  "license": "MIT",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
-  "files": [
-    "dist",
-    "src"
-  ],
+  "name": "spike-monorepo",
+  "license": "ISC",
   "engines": {
     "node": ">=10"
   },
+  "conributors": [
+    "Jesse Hoyos",
+    "Chris D. Macrae <hello@chrisdmacrae.com>",
+    "Jeff Escalante"
+  ],
   "scripts": {
     "start": "npx lerna run start",
     "build": "npx lerna run build",
@@ -31,25 +31,5 @@
     "semi": true,
     "singleQuote": true,
     "trailingComma": "es5"
-  },
-  "name": "spike",
-  "conributors": [
-    "Jesse Hoyos",
-    "Chris D. Macrae <hello@chrisdmacrae.com>",
-    "Jeff Escalante"
-  ],
-  "module": "dist/epikse.esm.js",
-  "devDependencies": {
-    "@types/shelljs": "^0.8.8",
-    "esbuild": "^0.6.27",
-    "husky": "^4.2.5",
-    "shelljs": "^0.8.4",
-    "tsdx": "^0.13.3",
-    "tslib": "^2.0.1",
-    "typescript": "^4.0.2"
-  },
-  "dependencies": {
-    "@types/sade": "^1.7.2",
-    "sade": "^1.7.3"
   }
 }
