@@ -8,6 +8,10 @@ Before contributing, please read our [community guidelines](#community-guideline
   - [Development](#development)
   - [Production Builds](#production-builds)
   - [Releasing](#releasing)
+- [Maintenance](#maintenance)
+  - [Adding New Dependencies](#adding-new-dependencies)
+  - [Create New Packages](#create-new-packages)
+  - [Running Commands On Packages](#running-commands-on-packages)
 - [Community Guidelines](#community-guidelines)
 
 ## Getting started
@@ -58,6 +62,44 @@ npm run build
 ### Releasing
 
 We're not there yet, we're just an alpha project. Stay tuned!
+
+## Maintenance
+
+### Adding New Dependencies
+
+To add a new dependency to all packages of the monorepo, run:
+
+```
+npm run add -- package-name
+```
+
+To add a new dependency to only certain packages of the monorepo, run:
+
+```
+npm run add -- package-name --scope=@spike/package-name
+```
+
+### Create New Packages
+
+To create a new package to the monorepo, you can run:
+
+```
+npm run create -- @spike/package-name
+```
+
+### Running Commands On Packages
+
+To run a CLI command on all packages, run:
+
+```
+npm run exec -- "command args"
+```
+
+To run a CLI command on specific packages, run:
+
+```
+npm run exec -- "command args" --scope=@spike/package-name
+```
 
 ## Community Guidelines
 
