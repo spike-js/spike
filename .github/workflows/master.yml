@@ -1,0 +1,47 @@
+name: Build, Test, Lint for Master
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macOS-latest, windows-latest]
+        node-version: [10.x, 12.x, 14.x]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v1
+      
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+          
+      - uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: nodeModules-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            nodeModules-
+
+      - if: matrix.os == 'windows-latest'
+        run: |
+          npm install --global --production windows-build-tools@4.0.0
+          npm install --global --production node-gyp
+
+      - name: Install Dependencies
+          run: |
+            npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Test
+        run: npm run test
+
+      - name: Lint
+        if: matrix.os == 'ubuntu-latest'
+        run: npm run lint
