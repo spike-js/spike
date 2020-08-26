@@ -23,7 +23,7 @@
   "peerDependencies": {},
   "husky": {
     "hooks": {
-      "pre-commit": "tsdx lint"
+      "pre-commit": "echo \"TODO: Pre-commit hook not yet implemented...\""
     }
   },
   "prettier": {
