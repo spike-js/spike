@@ -12,11 +12,13 @@
     "node": ">=10"
   },
   "scripts": {
-    "start": "tsdx watch",
-    "build": "tsdx build -i src/cli.ts --target node",
-    "test": "tsdx test",
-    "lint": "tsdx lint",
-    "prepare": "tsdx build"
+    "start": "npx lerna run start",
+    "build": "npx lerna run build",
+    "test": "npx lerna run test",
+    "lint": "npx lerna run lint",
+    "create": "npx lerna create",
+    "add": "npx lerna add",
+    "exec": "npx lerna exec"
   },
   "peerDependencies": {},
   "husky": {
@@ -35,6 +37,7 @@
   "module": "dist/epikse.esm.js",
   "devDependencies": {
     "@types/shelljs": "^0.8.8",
+    "esbuild": "^0.6.27",
     "husky": "^4.2.5",
     "shelljs": "^0.8.4",
     "tsdx": "^0.13.3",
@@ -43,7 +46,6 @@
   },
   "dependencies": {
     "@types/sade": "^1.7.2",
-    "esbuild": "^0.6.27",
     "sade": "^1.7.3"
   }
 }

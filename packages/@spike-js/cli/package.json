@@ -21,7 +21,11 @@
     "url": "git+https://github.com/spike-js/spike.git"
   },
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "start": "tsdx watch",
+    "build": "tsdx build -i src/cli.ts --target node",
+    "test": "tsdx test",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build"
   },
   "bugs": {
     "url": "https://github.com/spike-js/spike/issues"
