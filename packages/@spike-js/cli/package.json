@@ -21,16 +21,14 @@
     "url": "git+https://github.com/spike-js/spike.git"
   },
   "scripts": {
-    "start": "tsdx watch",
-    "build": "tsdx build -i src/cli.ts --target node",
-    "test": "tsdx test",
-    "lint": "tsdx lint",
-    "prepare": "tsdx build"
+    "start": "npx tsdx watch",
+    "build": "npx tsdx build -i src/cli.ts --target node",
+    "test": "npx tsdx test",
+    "lint": "npx tsdx lint",
+    "prepare": "npx tsdx build"
   },
   "devDependencies": {
     "@types/shelljs": "^0.8.8",
-    "esbuild": "^0.6.27",
-    "husky": "^4.2.5",
     "shelljs": "^0.8.4",
     "tsdx": "^0.13.3",
     "tslib": "^2.0.1",

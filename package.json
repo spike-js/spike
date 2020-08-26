@@ -12,6 +12,7 @@
     "Jeff Escalante"
   ],
   "scripts": {
+    "postinstall": "npx lerna run bootstrap",
     "start": "npx lerna run start",
     "build": "npx lerna run build",
     "test": "npx lerna run test",
@@ -20,7 +21,10 @@
     "add": "npx lerna add",
     "exec": "npx lerna exec"
   },
-  "peerDependencies": {},
+  "devDependencies": {
+    "esbuild": "^0.6.27",
+    "husky": "^4.2.5"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "echo \"TODO: Pre-commit hook not yet implemented...\""
