@@ -23,6 +23,7 @@ npm install
 ```
 
 > **Heads up 👋**
+>
 > Running `npm install` installs dependencies for the root `package.json` file, and _all_ `package.json` files in the `packages/` folder. You do not need to do this yourself.
 
 ### Development
@@ -46,6 +47,7 @@ npm run develop -- --scope @spike/package-name,npm run develop -- --scope @spike
 ```
 
 > **Heads up 👋**
+>
 > The `develop` script starts the `develop` script of every package inside the `packages` folder, or for the scope specified.
 
 ### Production Builds
@@ -57,6 +59,7 @@ npm run build
 ```
 
 > **Heads up 👋**
+>
 > The `build` script starts the `build` script of every package inside the `packages` folder, or for the scope specified, and runs them in the correct order for you!
 
 ### Releasing
