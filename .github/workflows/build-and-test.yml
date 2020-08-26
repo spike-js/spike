@@ -1,0 +1,43 @@
+name: Build, Test, Lint for Pull Requests
+
+on:
+  push:
+    branches-ignore:
+      - master
+        - 
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+
+      - uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: nodeModules-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            nodeModules-
+
+      - name: Install Dependencies
+        run: npm ci
+        env:
+          CI: true
+
+      - name: Build
+        run: npm run build
+        env:
+          CI: true
+          
+      - name: Lint
+        run: npm run lint
+        env:
+          CI: true
+          
+      - name: Test
+        run: npm run test
+        env:
+          CI: true
