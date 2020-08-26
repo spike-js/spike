@@ -32,8 +32,12 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "epikse",
-  "author": "Jesse Hoyos",
+  "name": "spike",
+  "conributors": [
+    "Jesse Hoyos",
+    "Chris D. Macrae <hello@chrisdmacrae.com>",
+    "Jeff Escalante"
+  ],
   "module": "dist/epikse.esm.js",
   "devDependencies": {
     "@types/shelljs": "^0.8.8",
