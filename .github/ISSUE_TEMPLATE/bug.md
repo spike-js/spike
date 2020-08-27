@@ -5,7 +5,7 @@ labels: bug
 ---
 
 <!--
-  Please fill out each section below, otherwise your issue will be closed. This info allows Tina maintainers to diagnose (and fix!) your issue as quickly as possible.
+  Please fill out each section below, otherwise your issue will be closed. This info allows maintainers to diagnose (and fix!) your issue as quickly as possible.
 
   Before opening a new issue, please search existing issues: https://github.com/tinacms/tinacms/issues
 -->
