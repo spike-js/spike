@@ -12,9 +12,11 @@
     "Jeff Escalante"
   ],
   "scripts": {
-    "postinstall": "npx lerna run bootstrap",
+    "postinstall": "npx lerna bootstrap --hoist --reject-cycles --force-local",
     "start": "npx lerna run start",
-    "build": "npx lerna run build",
+    "develop": "npm run dev",
+    "dev": "npx lerna run dev --reject-cycles",
+    "build": "npx lerna run build --reject-cycles",
     "test": "npx lerna run test",
     "lint": "npx lerna run lint",
     "create": "npx lerna create",
@@ -23,7 +25,8 @@
   },
   "devDependencies": {
     "esbuild": "^0.6.27",
-    "husky": "^4.2.5"
+    "husky": "^4.2.5",
+    "lerna": "^3.22.1"
   },
   "husky": {
     "hooks": {
