@@ -26,12 +26,11 @@
   "prettier": {
     "printWidth": 80,
     "semi": true,
-    "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "epikse",
+  "name": "spike",
   "author": "Jesse Hoyos",
-  "module": "dist/epikse.esm.js",
+  "module": "dist/spike.esm.js",
   "devDependencies": {
     "@types/shelljs": "^0.8.8",
     "husky": "^4.2.5",
