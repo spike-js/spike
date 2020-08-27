@@ -1,4 +1,4 @@
-import path from 'path';
+import { join } from 'path';
 import { mkdir, rm } from 'shelljs';
 
 const OUT_DIR = 'out';
@@ -7,7 +7,7 @@ const cwd = process.cwd();
 export default async (cmd: string) => {
   if (cmd === 'build') {
     console.log('building...');
-    mkdir('-p', path.join(cwd, OUT_DIR));
+    mkdir('-p', join(cwd, OUT_DIR));
   }
   if (cmd === 'pack') {
     console.log('packing...');

@@ -1,0 +1,26 @@
+{
+  "name": "spike",
+  "version": "2.0.0-alpha",
+  "description": "A simple SSG, that doesn't scale, for the small projects that need a tool that just works, and works forever.",
+  "author": "Chris D. MacRae <hello@chrisdmacrae.com>",
+  "homepage": "https://github.com/spike-js/spike#readme",
+  "license": "ISC",
+  "main": "src/index.ts",
+  "types": "dist/index.d.ts",
+  "typings": "dist/index.d.ts",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spike-js/spike.git"
+  },
+  "scripts": {},
+  "bugs": {
+    "url": "https://github.com/spike-js/spike/issues"
+  }
+}

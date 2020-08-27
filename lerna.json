@@ -1,0 +1,5 @@
+{
+  "packages": ["packages/@spike-js/*", "packages/[!_]*"],
+  "npmClient": "npm",
+  "version": "2.0.0-alpha"
+}
