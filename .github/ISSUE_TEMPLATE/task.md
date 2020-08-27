@@ -1,13 +1,13 @@
 ---
-name: Maintainer Task 🐞
+name: Maintainer Task ✍🏾
 about: This template is how maintainers track their work. Any issue created by a non-maintainer without a related pull request will be closed.
 labels: help-wanted
 ---
 
 <!--
-  Please fill out each section below, otherwise your issue will be closed. This info allows Tina maintainers to diagnose (and fix!) your issue as quickly as possible.
+  Please fill out each section below, otherwise your issue will be closed. This info allows Spike maintainers to diagnose (and fix!) your issue as quickly as possible.
 
-  Before opening a new issue, please search existing issues: https://github.com/tinacms/tinacms/issues
+  Before opening a new issue, please search existing issues: https://github.com/spike-js/spike/issues
 -->
 
 ## Struggle/Problem
