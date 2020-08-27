@@ -23,7 +23,7 @@
   "scripts": {
     "start": "npx tsdx watch",
     "build": "npx tsdx build -i src/cli.ts --target node",
-    "test": "npx tsdx test",
+    "test": "npx tsdx test --passWithNoTests",
     "lint": "npx tsdx lint",
     "prepare": "npx tsdx build"
   },
