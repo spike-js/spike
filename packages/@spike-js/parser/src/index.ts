@@ -1,6 +1,8 @@
 import path from 'path';
 import { promises as fs } from 'fs';
 import { map, filter, reduce } from 'asyncro';
+import reshape from 'reshape';
+// import { modifyNodes } from 'reshape-plugin-util';
 
 let cwd = process.cwd();
 
@@ -38,6 +40,7 @@ export default async function parser(): Promise<Graph> {
   const externalNodes = await map(
     await filter(files, async (file: string) => !file.match(/\^.*/)),
     async (file: string) => ({
+      id: file,
       // assume a file found means an external node
       type: 'external',
       // assign an external location
@@ -47,20 +50,46 @@ export default async function parser(): Promise<Graph> {
     })
   );
 
-  console.log(externalNodes);
+  const nodesWithChildren = await map(
+    await filter(externalNodes, async (node: Node) => node.mimeType === 'html'),
+    async (node: Node) => {
+      // here we need to traverse html files and find scripts and css linked
+      // within to set as children/dependencies of said html files
+      const html = await fs.readFile(node.location as string);
 
-  const graph = reduce(
-    externalNodes,
+      const tags = new Promise(async (resolve, _) => {
+        reshape()
+          .process(html)
+          .then((output: any) => {
+            console.log(output.output());
+            resolve(output.output());
+          });
+      });
+
+      const srcs = tags.then((res: any) => getScriptSrc(res));
+
+      node.children = await srcs;
+    }
+  );
+
+  return await reduce(
+    await externalNodes.concat(nodesWithChildren),
     async (graph: Graph, node: Node) => {
       graph.push(node);
       return graph;
     },
     []
-  );
+  ).then((res: Graph) => console.log(res));
+}
 
-  console.log(graph);
-
-  return graph;
+function getScriptSrc(tree: any) {
+  return [...tree].reduce((m: any, node: any) => {
+    if (node.name === 'script') {
+      if (node.attrs.src) {
+        m.push(node.attrs.src.content);
+      }
+    }
+  }, []);
 }
 
 const getMime = (path: string) =>
@@ -70,6 +99,8 @@ const getMime = (path: string) =>
     ? 'css'
     : path.match(/\.js/)
     ? 'javascript'
+    : path.match(/\.ts/)
+    ? 'typescript'
     : 'unknown';
 
-console.log(parser());
+parser();

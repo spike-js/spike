@@ -39,6 +39,8 @@
     "typescript": "^4.0.2"
   },
   "dependencies": {
-    "asyncro": "^3.0.0"
+    "asyncro": "^3.0.0",
+    "reshape": "^1.0.1",
+    "reshape-plugin-util": "^0.2.1"
   }
 }
