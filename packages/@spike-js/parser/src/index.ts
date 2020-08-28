@@ -1,24 +1,17 @@
 import path from 'path';
 import { promises as fs } from 'fs';
+import { map, filter, reduce } from 'asyncro';
 
 let cwd = process.cwd();
 
 /** NOTES:
  * 1. find all the files
  * 2. ignore the ones that need to be ignored
- * 3. classify each fileNode with a type
- *  type Graph = Node[]
-
-    type Node = {
-      type: “javascript” | “typescript” | “css” | “html”
-      id: string // filepath
-      children: string[]
-      data: unknown
-    }
-*/
+ * 3. classify each fileNode with a type, mime, and location
+ * 4.
+ */
 
 type Graph = Node[];
-
 interface Node {
   id?: string;
   data?: unknown;
@@ -27,7 +20,6 @@ interface Node {
   mimeType?: 'javascript' | 'typescript' | 'css' | 'html';
   children?: string[];
 }
-
 type FilePath = string;
 type InternalPath = {
   start: {
@@ -42,76 +34,42 @@ type InternalPath = {
 
 export default async function parser(): Promise<Graph> {
   let files = await fs.readdir(cwd);
-  let graph: Graph = [];
 
-  // first we add external nodes to the graph, these are easy...
-  const externalNodes = files
-    .filter(file => !isDotfile(file))
-    .map(async file => {
-      let node: Node = {};
-      // we can safely assume that if a node has a file, it is an external
-      // node
-      node.type = 'external';
-
+  const externalNodes = await map(
+    await filter(files, async (file: string) => !file.match(/\^.*/)),
+    async (file: string) => ({
+      // assume a file found means an external node
+      type: 'external',
+      // assign an external location
+      location: path.resolve(path.join(cwd, file)),
       // assign the node a mimeType
-      if (file.match(/\.html/)) {
-        node.mimeType = 'html';
-      }
-      if (file.match(/\.css/)) {
-        node.mimeType = 'css';
-      }
-      if (file.match(/\.js/)) {
-        node.mimeType = 'javascript';
-      }
+      mimeType: getMime(file),
+    })
+  );
 
-      // assign a location
-      node.location = path.resolve(path.join(cwd, file));
+  console.log(externalNodes);
 
-      return node;
-    });
+  const graph = reduce(
+    externalNodes,
+    async (graph: Graph, node: Node) => {
+      graph.push(node);
+      return graph;
+    },
+    []
+  );
 
-  externalNodes.forEach(n => graph.push(n));
-
-  // await Promise.all(
-  //   files
-  //     .filter(f => !isDotfile(f)) // we dont care about config files
-  //     .map(async file => {
-  //       // we will create an external node out of each file
-  //       let node: Node = {};
-
-  //       // assign the node a mimeType
-  //       if (file.match(/\.html/)) {
-  //         node.mimeType = 'html';
-  //       }
-  //       if (file.match(/\.css/)) {
-  //         node.mimeType = 'css';
-  //       }
-  //       if (file.match(/\.js/)) {
-  //         node.mimeType = 'javascript';
-  //       }
-
-  //       // we can safely assume that if a node has a file, it is an external
-  //       // node
-  //       node.type = 'external';
-
-  //       // assign a location
-  //       // we will handle internal locations later
-  //       node.location = path.resolve(path.join(cwd, file));
-
-  //       // add these simple nodes to the graph
-  //       graph.push(node);
-  //     })
-  // ).then(() =>
-  //   graph
-  //     .filter(node => node.mimeType === 'html')
-  //     .map(node => {
-  //       console.log(node);
-  //     })
-  // );
+  console.log(graph);
 
   return graph;
 }
 
-const isDotfile = (str: string) => str.match(/\^.*/);
+const getMime = (path: string) =>
+  path.match(/\.html/)
+    ? 'html'
+    : path.match(/\.css/)
+    ? 'css'
+    : path.match(/\.js/)
+    ? 'javascript'
+    : 'unknown';
 
 console.log(parser());
