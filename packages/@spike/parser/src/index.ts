@@ -2,7 +2,6 @@ import path from 'path';
 import { promises as fs } from 'fs';
 import { map, filter, reduce } from 'asyncro';
 import reshape from 'reshape';
-// import { modifyNodes } from 'reshape-plugin-util';
 
 let cwd = process.cwd();
 
@@ -47,28 +46,27 @@ export default async function parser(): Promise<Graph> {
       location: path.resolve(path.join(cwd, file)),
       // assign the node a mimeType
       mimeType: getMime(file),
+      children: [],
     })
   );
 
   const nodesWithChildren = await map(
     await filter(externalNodes, async (node: Node) => node.mimeType === 'html'),
     async (node: Node) => {
-      // here we need to traverse html files and find scripts and css linked
-      // within to set as children/dependencies of said html files
+      // get the string content from the html nodes
       const html = await fs.readFile(node.location as string);
 
-      const tags = new Promise(async (resolve, _) => {
+      return new Promise(async () => {
+        // we want to traverse html files, find the script tags, find
+        // the src attribute and push that content into the node.children array
         reshape()
           .process(html)
-          .then((output: any) => {
-            console.log(output.output());
-            resolve(output.output());
+          .then((res: any) => {
+            // chokes here?
+            const out = res.output();
+            node.children?.push(out);
           });
       });
-
-      const srcs = tags.then((res: any) => getScriptSrc(res));
-
-      node.children = await srcs;
     }
   );
 
@@ -80,16 +78,6 @@ export default async function parser(): Promise<Graph> {
     },
     []
   ).then((res: Graph) => console.log(res));
-}
-
-function getScriptSrc(tree: any) {
-  return [...tree].reduce((m: any, node: any) => {
-    if (node.name === 'script') {
-      if (node.attrs.src) {
-        m.push(node.attrs.src.content);
-      }
-    }
-  }, []);
 }
 
 const getMime = (path: string) =>
