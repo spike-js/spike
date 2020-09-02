@@ -2,6 +2,7 @@ import path from 'path';
 import { promises as fs } from 'fs';
 import { map, filter, reduce } from 'asyncro';
 import reshape from 'reshape';
+import { modifyNodes } from 'reshape-plugin-util';
 
 let cwd = process.cwd();
 
@@ -18,7 +19,7 @@ interface Node {
   data?: unknown;
   type?: 'internal' | 'external';
   location?: FilePath | InternalPath;
-  mimeType?: 'javascript' | 'typescript' | 'css' | 'html';
+  mimeType?: 'javascript' | 'typescript' | 'css' | 'html' | 'unknown';
   children?: string[];
 }
 type FilePath = string;
@@ -36,48 +37,57 @@ type InternalPath = {
 export default async function parser(): Promise<Graph> {
   let files = await fs.readdir(cwd);
 
-  const externalNodes = await map(
+  const nodes = await map(
     await filter(files, async (file: string) => !file.match(/\^.*/)),
-    async (file: string) => ({
-      id: file,
-      // assume a file found means an external node
-      type: 'external',
-      // assign an external location
-      location: path.resolve(path.join(cwd, file)),
-      // assign the node a mimeType
-      mimeType: getMime(file),
-      children: [],
-    })
-  );
+    async (file: string) => {
+      let node: Node = {
+        type: 'external',
+        id: file,
+        location: path.resolve(path.join(cwd, file)),
+        mimeType: getMime(file),
+      };
 
-  const nodesWithChildren = await map(
-    await filter(externalNodes, async (node: Node) => node.mimeType === 'html'),
-    async (node: Node) => {
-      // get the string content from the html nodes
-      const html = await fs.readFile(node.location as string);
+      if (node.mimeType === 'html') {
+        node.children = await map([], async () => {
+          const html = await fs.readFile(node.location as string);
 
-      return new Promise(async () => {
-        // we want to traverse html files, find the script tags, find
-        // the src attribute and push that content into the node.children array
-        reshape()
-          .process(html)
-          .then((res: any) => {
-            // chokes here?
-            const out = res.output();
-            node.children?.push(out);
-          });
-      });
+          return () =>
+            reshape()
+              .process(html)
+              .then((res: any) => {
+                return extractSrcPath(res);
+              });
+        });
+      }
+      return node;
     }
   );
 
   return await reduce(
-    await externalNodes.concat(nodesWithChildren),
+    nodes,
     async (graph: Graph, node: Node) => {
       graph.push(node);
       return graph;
     },
     []
   ).then((res: Graph) => console.log(res));
+}
+
+const isScript = (node: any) => {
+  return node.type === 'tag' && node.name === 'script';
+};
+
+function extractSrcPath(tree: any) {
+  return modifyNodes(
+    tree,
+    (node: any) => isScript(node),
+    (node: any) => {
+      if (!node.attrs.src) {
+        return ':(';
+      }
+      return node.attrs.src.content;
+    }
+  );
 }
 
 const getMime = (path: string) =>
