@@ -19,11 +19,12 @@ export interface ParserOptions {
 
 export default async function parser(opts?: ParserOptions): Promise<Graph> {
   // TODO: implement and propogate
-  const files = await fs.readdir(opts?.workingDirectory || process.cwd());
+  const entryPoints = await fs.readdir(opts?.workingDirectory || process.cwd());
   const graph: Graph = [];
   
+  // Iterate through entryPoints and create graph
   await Promise.all(
-    files
+    entryPoints
       .filter(getAllowedMimeTypes)
       .map((node) => createGraphNode(node))
       .map(async (node) => await getHtmlNodeMeta(node, graph))
