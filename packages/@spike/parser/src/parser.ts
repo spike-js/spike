@@ -21,22 +21,39 @@ export interface ParserOptions {
 export default async function parser(opts?: ParserOptions): Promise<Graph> {
   // TODO: implement and propogate
   const entryPoints = await fs.readdir(opts?.workingDirectory || process.cwd());
-  const graph: Graph = [];
-  
-  // Iterate through entryPoints and create graph
-  await Promise.all(
+  let baseGraph: Graph = await Promise.all(
     entryPoints
       .filter(getAllowedMimeTypes)
-      .map(async (entryPoint) => {
-        return await createGraphNode(entryPoint)
-      })
-      .map(async (node) => {
-        return await handleHtmlEntryNode(node, graph)
-      })
-      .map(async (node) => {
-        return await handleJavascriptEntryNode(node, graph)
-      })
+      .map(async (entryPoint) => createGraphNode(entryPoint))
   );
+  let resolvedGraph: Graph = await Promise.all(
+    baseGraph
+      .map(async (node) => node)  
+      .map(async (node) => await handleHtmlEntryNode(node, baseGraph))
+      .map(async (node) => await handleJavascriptEntryNode(node, baseGraph))
+  );
+  // Final act of removing duplicates from the graph, flattening it entirely
+  const flatGraph = resolvedGraph.reduce(dedupeGraph, baseGraph);
+
+  return flatGraph;
+}
+
+function dedupeGraph(graph: Graph, currentNode: Node): Graph {
+  const match_keys = graph.reduce((keys: number[], node: Node, index: number) => {
+    if (node.id === currentNode.id || node.location === currentNode.location) {
+      keys.push(index);
+    }
+
+    return keys;
+  }, []);
+
+  if (match_keys.length > 1) {
+    for (let i = 1; i < match_keys.length; i++) {
+      let match = match_keys[i];
+
+      graph.splice(match, 1);
+    }
+  }
 
   return graph;
 }
