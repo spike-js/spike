@@ -65,8 +65,6 @@ export function getJavascriptNodesFromHtmlNode(htmlNode: Node, graph: Graph): Fu
 
               getJavascriptNodeMeta(fileName, graph);
               htmlNode.children.push(fileName);
-
-              console.log(node);
             }
           }
 

@@ -26,11 +26,6 @@ export type InternalPath = {
 };
 
 export async function createGraphNode(file: string): Promise<Node> {
-  if (typeof file !== "string") {
-    console.log(file);
-    throw new Error("dude it's not a string");
-  }
-
   return {
     id: file,
     // assume a file found means an external node
