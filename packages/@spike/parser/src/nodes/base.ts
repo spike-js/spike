@@ -5,10 +5,12 @@ export interface Node {
   id: string;
   type: 'internal' | 'external';
   location: FilePath | InternalPath;
-  mimeType: 'javascript' | 'typescript' | 'css' | 'html';
+  mimeType: MimeTypes;
   children: string[];
   data?: unknown;
 }
+
+export type MimeTypes = 'javascript' | 'typescript' | 'css' | 'html' | 'unsupported'
 
 export type FilePath = string;
 
@@ -23,15 +25,22 @@ export type InternalPath = {
   };
 };
 
-export const createGraphNode = (file: string) => ({
-  id: file,
-  // assume a file found means an external node
-  type: 'external',
-  // assign an external location
-  location: path.resolve(path.join(process.cwd(), file)),
-  // assign the node a mimeType
-  mimeType: getMime(file),
-  children: []
-} as Node);
+export async function createGraphNode(file: string): Promise<Node> {
+  if (typeof file !== "string") {
+    console.log(file);
+    throw new Error("dude it's not a string");
+  }
+
+  return {
+    id: file,
+    // assume a file found means an external node
+    type: typeof location === "string" ? 'external' : 'internal',
+    // assign an external location
+    location: path.resolve(path.join(process.cwd(), file)),
+    // assign the node a mimeType
+    mimeType: getMime(file),
+    children: []
+  }
+}
 
 export default createGraphNode;

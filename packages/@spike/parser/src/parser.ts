@@ -1,6 +1,7 @@
 import { promises as fs } from 'fs';
 import createGraphNode, { Node } from './nodes/base';
-import { getHtmlNodeMeta } from './nodes/html';
+import { handleHtmlEntryNode } from './nodes/html';
+import { handleJavascriptEntryNode } from './nodes/javascript';
 import { getAllowedMimeTypes } from './utils';
 
 /** NOTES:
@@ -26,8 +27,15 @@ export default async function parser(opts?: ParserOptions): Promise<Graph> {
   await Promise.all(
     entryPoints
       .filter(getAllowedMimeTypes)
-      .map((node) => createGraphNode(node))
-      .map(async (node) => await getHtmlNodeMeta(node, graph))
+      .map(async (entryPoint) => {
+        return await createGraphNode(entryPoint)
+      })
+      .map(async (node) => {
+        return await handleHtmlEntryNode(node, graph)
+      })
+      .map(async (node) => {
+        return await handleJavascriptEntryNode(node, graph)
+      })
   );
 
   return graph;

@@ -2,20 +2,45 @@ import { promises as fs } from "fs";
 import reshape from 'reshape';
 import { Node } from "./base";
 import { Graph } from '../parser';
-import { getScriptNodes } from './script';
+import { getJavascriptNodesFromHtmlNode } from './javascript';
 
-export const getHtmlNodeMeta = async (node: Node, graph: Graph) => {
-  if (node.mimeType === 'html') {
-    // here we need to traverse html files and find scripts and css linked
-    // within to set as children/dependencies of said html files
-    const html = await fs.readFile(node.location as string, { encoding: "utf-8" });
-    const html_plugins = [getScriptNodes(graph, node)]
-    
-    await reshape({ plugins: html_plugins })
-      .process(html);
+/**
+ * Handles an HTML entry node
+ * 
+ * @param node 
+ * @param graph 
+ */
+export async function handleHtmlEntryNode(node: Promise<Node>, graph: Graph): Promise<Node> {
+  let htmlNode = await node;
 
-    return node;
+  if (htmlNode?.mimeType === 'html') {
+    return await getHtmlNodeMeta(htmlNode, graph);
   }
 
   return node;
+}
+
+/**
+ * Traverses a single html file's AST, creating its node and 
+ * collecting its child nodes and adding them to the graph if necessary
+ * 
+ * @param node
+ * @param graph
+ * @returns Promise<Node>
+ */
+export async function getHtmlNodeMeta(htmlNode: Node, graph: Graph): Promise<Node> {
+  // here we need to traverse html files and find scripts and css linked
+  // within to set as children/dependencies of said html files by using
+  // reshape plugins to parse the ast and add/modify to the graph
+  const html = await fs.readFile(htmlNode.location as string, { encoding: "utf-8" });
+  const html_plugins = [
+    getJavascriptNodesFromHtmlNode(htmlNode, graph)
+  ];
+  
+  await reshape({ plugins: html_plugins })
+    .process(html);
+  
+  graph.push(htmlNode);
+
+  return htmlNode;
 }
