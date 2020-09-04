@@ -1,18 +1,32 @@
-#!/usr/bin/env node
-import prog from './prog';
-import spike from './index';
+import sade from "sade";
+import addBuildCommand from './commands/build';
+import addWatchCommand from './commands/watch';
+import addPackCommand from './commands/pack';
+import addCleanCommand from './commands/clean';
+import addEjectCommand from './commands/eject';
 
-const run = (cmd: string) => {
-  spike(cmd)
-    .then((output: any) => {
-      if (output != null) console.info(cmd);
-      if (!cmd.includes('watch')) process.exit(0);
-    })
-    .catch((error: any) => {
-      process.exitCode = (typeof error.code === 'number' && error.code) || 1;
-      console.error(error);
-      process.exit();
-    });
+const CLI = sade('spike');
+
+export type Commands =
+  "build" |
+  "watch" |
+  "pack" |
+  "clean" |
+  "eject";
+
+export interface CliOptions {
+  workingDirectory: string;
+  outputDirectory: string;
+}
+
+export async function createCommandLine(options: CliOptions) {
+  addBuildCommand(CLI, options);
+  addWatchCommand(CLI, options);
+  addPackCommand(CLI, options);
+  addCleanCommand(CLI, options);
+  addEjectCommand(CLI, options);
+
+  return (argv: string[]) => CLI.parse(argv);
 };
 
-prog(run)(process.argv);
+export default createCommandLine;
