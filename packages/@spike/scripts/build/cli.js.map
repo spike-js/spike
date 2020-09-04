@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/cli.ts"],
+  "sourcesContent": ["import sade from \"sade\";\nimport addBuildCommand from './commands/build';\n\nconst CLI = sade('spike-scripts');\n\nexport type Commands =\n  \"build\" |\n  \"watch\"\n\nexport interface CliOptions {\n  workingDirectory: string;\n  outputDirectory: string;\n}\n\nexport async function createCommandLine(options: CliOptions) {\n  addBuildCommand(CLI, options);\n\n  return (argv: string[]) => CLI.parse(argv);\n};\n\nexport default createCommandLine;"],
+  "mappings": "AAAA,oBACA,gCAEA,KAAM,GAAM,EAAK,iBAWjB,wCAAwC,GACtC,SAAgB,EAAK,GAEd,AAAC,GAAmB,EAAI,MAAM,GAGvC,cAAe",
+  "names": []
+}
