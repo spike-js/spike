@@ -1,6 +1,2 @@
-import parser from "./parser";
-
-parser()
-  .then(res => console.log("DEVELOPER BUILD\n", res, res.length));
-
-export default parser;
+export * from "./parser";
+export type { Node, MimeTypes, InternalPath } from "./nodes/base";

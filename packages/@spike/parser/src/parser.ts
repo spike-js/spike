@@ -18,7 +18,7 @@ export interface ParserOptions {
   workingDirectory: string;
 }
 
-export default async function parser(opts?: ParserOptions): Promise<Graph> {
+export async function parser(opts?: ParserOptions): Promise<Graph> {
   // TODO: implement and propogate
   const entryPoints = await fs.readdir(opts?.workingDirectory || process.cwd());
   let baseGraph: Graph = await Promise.all(
@@ -57,3 +57,5 @@ function dedupeGraph(graph: Graph, currentNode: Node): Graph {
 
   return graph;
 }
+
+export default parser;
