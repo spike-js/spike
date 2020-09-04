@@ -1,2 +1,2 @@
-export * from "./parser";
-export type { Node, MimeTypes, InternalPath } from "./nodes/base";
+export * from './parser';
+export type { Node, MimeTypes, InternalPath } from './nodes/base';
