@@ -1,5 +1,5 @@
 import { promises as fs } from 'fs';
-import reshape from 'reshape';
+import { default as reshapeParser } from 'reshape-parser';
 import { Node } from './base';
 import { Graph } from '../parser';
 import { getJavascriptNodesFromHtmlNode } from './javascript';
@@ -41,9 +41,10 @@ export async function getHtmlNodeMeta(
   const html = await fs.readFile(htmlNode.nodeLocation as string, {
     encoding: 'utf-8',
   });
-  const html_plugins = [getJavascriptNodesFromHtmlNode(htmlNode, graph)];
 
-  await reshape({ plugins: html_plugins }).process(html);
+  const html_ast = reshapeParser(html);
+
+  await getJavascriptNodesFromHtmlNode(htmlNode, graph)(html_ast);
 
   graph.push(htmlNode);
 
