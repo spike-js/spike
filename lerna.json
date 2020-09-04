@@ -1,5 +1,5 @@
 {
   "packages": ["packages/@spike/*", "packages/[!_]*"],
   "npmClient": "npm",
-  "version": "2.0.0-alpha"
+  "version": "4.0.0-alpha"
 }
