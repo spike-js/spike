@@ -38,7 +38,7 @@ export async function getHtmlNodeMeta(
   // here we need to traverse html files and find scripts and css linked
   // within to set as children/dependencies of said html files by using
   // reshape plugins to parse the ast and add/modify to the graph
-  const html = await fs.readFile(htmlNode.location as string, {
+  const html = await fs.readFile(htmlNode.nodeLocation as string, {
     encoding: 'utf-8',
   });
   const html_plugins = [getJavascriptNodesFromHtmlNode(htmlNode, graph)];

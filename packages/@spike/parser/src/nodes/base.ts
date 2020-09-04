@@ -4,7 +4,7 @@ import { getMime } from '../utils';
 export interface Node {
   id: string;
   type: 'internal' | 'external';
-  location: FilePath | InternalPath;
+  nodeLocation: FilePath | InternalPath;
   mimeType: MimeTypes;
   children: string[];
   data?: unknown;
@@ -30,13 +30,13 @@ export type InternalPath = {
   };
 };
 
-export async function createGraphNode(file: string): Promise<Node> {
+export async function createGraphNode(this: any, file: string): Promise<Node> {
   return {
     id: file,
     // assume a file found means an external node
-    type: typeof location === 'string' ? 'external' : 'internal',
+    type: typeof this.nodeLocation === 'string' ? 'external' : 'internal',
     // assign an external location
-    location: path.resolve(path.join(process.cwd(), file)),
+    nodeLocation: path.resolve(path.join(process.cwd(), file)),
     // assign the node a mimeType
     mimeType: getMime(file),
     children: [],

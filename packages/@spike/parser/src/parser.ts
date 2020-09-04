@@ -43,7 +43,7 @@ function dedupeGraph(graph: Graph, currentNode: Node): Graph {
     (keys: number[], node: Node, index: number) => {
       if (
         node.id === currentNode.id ||
-        node.location === currentNode.location
+        node.nodeLocation === currentNode.nodeLocation
       ) {
         keys.push(index);
       }

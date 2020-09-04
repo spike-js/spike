@@ -16,7 +16,10 @@ export async function handleJavascriptEntryNode(
   let scriptNode = await node;
 
   if (scriptNode.mimeType === 'javascript') {
-    return await getJavascriptNodeMeta(scriptNode.location as string, graph);
+    return await getJavascriptNodeMeta(
+      scriptNode.nodeLocation as string,
+      graph
+    );
   }
 
   return node;
@@ -38,7 +41,7 @@ export async function getJavascriptNodeMeta(
   const node = await createGraphNode(nodePath);
 
   if (internalPath) {
-    node.location = internalPath;
+    node.nodeLocation = internalPath;
   }
 
   graph.push(node);
@@ -86,13 +89,13 @@ export function getJavascriptNodesFromHtmlNode(
         }
 
         if (hasOnlyChildText) {
-          const location: InternalPath = getInternalNodeLocation(
+          const nodeLocation: InternalPath = getInternalNodeLocation(
             node.content[0],
             true
           );
 
           // TODO: get internal node, and push location string to parent
-          console.log('INLINE SCRIPT LOCATION: ', location);
+          console.log('INLINE SCRIPT LOCATION: ', nodeLocation);
         }
       } else if (Array.isArray(node.content) && node.content.length > 0) {
         walkToScriptTag(node.content, htmlNode, graph);
