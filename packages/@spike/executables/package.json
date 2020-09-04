@@ -1,7 +1,8 @@
 {
-  "name": "spike",
-  "version": "4.0.0-alpha",
-  "description": "A simple SSG, that doesn't scale, for the small projects that need a tool that just works, and works forever.",
+  "private": true,
+  "name": "@spike/executables",
+  "version": "0.1.0",
+  "description": "The library for generating executables for spike",
   "author": "Chris D. MacRae <hello@chrisdmacrae.com>",
   "homepage": "https://github.com/spike-js/spike#readme",
   "license": "ISC",
@@ -19,18 +20,11 @@
     "type": "git",
     "url": "git+https://github.com/spike-js/spike.git"
   },
+  "scripts": {},
   "bugs": {
     "url": "https://github.com/spike-js/spike/issues"
   },
-  "scripts": {
-    "build": "npx spike-scripts src/index.ts,src/bin.ts",
-    "start": "echo \"Not yet implemented\"",
-    "test": "echo \"Not yet implemented\"",
-    "lint": "echo \"Not yet implemented\"",
-    "prepare": "npm run build"
-  },
   "dependencies": {
-    "@spike/cli": "^0.1.0",
     "@spike/scripts": "^4.0.0-alpha",
     "@types/node": "^14.6.3"
   }

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/bin.ts"],
+  "sourcesContent": ["#!/usr/bin/env node\nimport { join } from 'path';\nimport { createCommandLine, CliOptions } from './cli';\n\nconst options: CliOptions = {\n  workingDirectory: process.cwd(),\n  outputDirectory: join(process.cwd(), \"./build\")\n};\n\ncreateCommandLine(options)\n  .then(cli => {\n    cli(process.argv);\n\n    process.exit(0);\n  })\n  .catch(error => {\n    console.error(error);\n\n    process.exit(1);\n  })\n\n"],
+  "mappings": ";AACA,4BACA,0CAEA,KAAM,GAAsB,CAC1B,iBAAkB,QAAQ,MAC1B,gBAAiB,EAAK,QAAQ,MAAO,YAGvC,EAAkB,GACf,KAAK,IACJ,EAAI,QAAQ,MAEZ,QAAQ,KAAK,KAEd,MAAM,IACL,QAAQ,MAAM,GAEd,QAAQ,KAAK",
+  "names": []
+}
