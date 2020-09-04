@@ -1,13 +1,11 @@
 {
-  "name": "spike",
+  "name": "@spike/core",
   "version": "2.0.0-alpha",
-  "description": "A simple SSG, that doesn't scale, for the small projects that need a tool that just works, and works forever.",
+  "description": "The core utilities for spike, shared between all core packages",
   "author": "Chris D. MacRae <hello@chrisdmacrae.com>",
   "homepage": "https://github.com/spike-js/spike#readme",
   "license": "ISC",
   "main": "src/index.ts",
-  "types": "dist/index.d.ts",
-  "typings": "dist/index.d.ts",
   "directories": {
     "lib": "lib",
     "test": "__tests__"
@@ -15,6 +13,9 @@
   "files": [
     "lib"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/spike-js/spike.git"

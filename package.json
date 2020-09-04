@@ -13,10 +13,10 @@
   ],
   "scripts": {
     "postinstall": "npx lerna bootstrap --hoist --reject-cycles --force-local",
-    "start": "npx lerna run start",
+    "start": "npx lerna run start --stream",
     "develop": "npm run dev",
-    "dev": "npx lerna run dev --reject-cycles",
-    "build": "npx lerna run build --reject-cycles",
+    "dev": "npx lerna run dev --reject-cycles --stream",
+    "build": "npx lerna run build --reject-cycles --stream",
     "test": "npx lerna run test",
     "lint": "npx lerna run lint",
     "create": "npx lerna create",

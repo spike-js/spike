@@ -1,0 +1,37 @@
+{
+  "name": "@spike/scripts",
+  "version": "4.0.0-alpha",
+  "description": "A utility package for maintaining Spike",
+  "author": "Chris D. MacRae <hello@chrisdmacrae.com>",
+  "homepage": "https://github.com/spike-js/spike#readme",
+  "license": "ISC",
+  "main": "build/index.ts",
+  "bin": {
+    "spike-scripts": "build/bin.js"
+  },
+  "directories": {
+    "build": "build",
+    "test": "__tests__"
+  },
+  "files": [
+    "build"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.yarnpkg.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spike-js/spike.git"
+  },
+  "scripts": {
+    "build": "npx esbuild src/*.ts --bundle --outdir=build --platform=node --target=es6 --format=cjs",
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/spike-js/spike/issues"
+  },
+  "dependencies": {
+    "esbuild": "^0.6.30",
+    "sade": "^1.7.3"
+  }
+}

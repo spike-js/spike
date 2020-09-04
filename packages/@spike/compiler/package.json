@@ -1,7 +1,8 @@
 {
-  "name": "spike",
-  "version": "2.0.0-alpha",
-  "description": "A simple SSG, that doesn't scale, for the small projects that need a tool that just works, and works forever.",
+  "private": true,
+  "name": "@spike/compiler",
+  "version": "0.1.0",
+  "description": "The HTML, CSS, and JS compiler for spike",
   "author": "Chris D. MacRae <hello@chrisdmacrae.com>",
   "homepage": "https://github.com/spike-js/spike#readme",
   "license": "ISC",
@@ -15,6 +16,9 @@
   "files": [
     "lib"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/spike-js/spike.git"
