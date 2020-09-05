@@ -10,16 +10,12 @@ export const getInternalNodeLocation = (
   inner?: boolean
 ): InternalPath => ({
   start: {
-    line: node.nodeLocation.line,
-    col: node.nodeLocation.col,
+    line: node.line,
+    col: node.col,
   },
   end: {
-    line: node.nodeLocation.line,
-    col:
-      node.nodeLocation.col +
-      (inner
-        ? node.nodeLocation.startInnerOffset
-        : node.nodeLocation.endInnerOffset),
+    line: node.line,
+    col: node.col + (inner ? node.startInnerOffset : node.endInnerOffset),
   },
 });
 

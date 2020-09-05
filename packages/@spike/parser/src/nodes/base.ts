@@ -30,13 +30,13 @@ export type InternalPath = {
   };
 };
 
-export async function createGraphNode(this: any, file: string): Promise<Node> {
+export async function createGraphNode(file: string): Promise<Node> {
   return {
-    id: file,
+    id: path.resolve(file),
     // assume a file found means an external node
-    type: typeof this.nodeLocation === 'string' ? 'external' : 'internal',
+    type: 'external',
     // assign an external location
-    nodeLocation: path.resolve(path.join(process.cwd(), file)),
+    nodeLocation: path.resolve(file),
     // assign the node a mimeType
     mimeType: getMime(file),
     children: [],

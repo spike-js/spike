@@ -1,3 +1,4 @@
+import path from 'path';
 import { Graph } from '../parser';
 import { getInternalNodeLocation } from '../utils';
 import createGraphNode, { InternalPath, Node } from './base';
@@ -49,6 +50,32 @@ export async function getJavascriptNodeMeta(
   return node;
 }
 
+export async function getInternalJavascriptNodeMeta(
+  currentNode: any,
+  htmlNode: Node,
+  graph: Graph
+): Promise<Node> {
+  const internalNodePath: InternalPath = getInternalNodeLocation(
+    currentNode.location,
+    true
+  );
+
+  const internalNodeId: string = `${htmlNode.nodeLocation}#${internalNodePath.start.line}:${internalNodePath.start.col}-${internalNodePath.end.line}:${internalNodePath.end.col}`;
+
+  const node: Node = {
+    id: internalNodeId,
+    type: 'internal',
+    nodeLocation: internalNodePath,
+    mimeType: 'javascript',
+    children: [],
+  };
+
+  graph.push(node);
+  htmlNode.children.push(node.id);
+
+  return node;
+}
+
 /**
  * Returns all script nodes from within an HTML node
  * by walking the HTML node's AST and extracting them
@@ -84,18 +111,15 @@ export function getJavascriptNodesFromHtmlNode(
             const fileName = node.attrs.src[0].content as string;
 
             getJavascriptNodeMeta(fileName, graph);
-            htmlNode.children.push(fileName);
+            htmlNode.children.push(path.resolve(fileName));
           }
         }
 
         if (hasOnlyChildText) {
-          const nodeLocation: InternalPath = getInternalNodeLocation(
-            node.content[0],
-            true
-          );
+          getInternalJavascriptNodeMeta(node, htmlNode, graph);
 
           // TODO: get internal node, and push location string to parent
-          console.log('INLINE SCRIPT LOCATION: ', nodeLocation);
+          // console.log('INLINE SCRIPT LOCATION: ', internalLocation);
         }
       } else if (Array.isArray(node.content) && node.content.length > 0) {
         walkToScriptTag(node.content, htmlNode, graph);
