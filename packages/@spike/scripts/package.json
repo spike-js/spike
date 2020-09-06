@@ -24,6 +24,7 @@
     "url": "git+https://github.com/spike-js/spike.git"
   },
   "scripts": {
+    "postinstall": "node build/postinstall.js",
     "build": "npx esbuild src/*.ts --bundle --outdir=build --platform=node --target=es6 --format=cjs",
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
