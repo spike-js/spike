@@ -1,27 +1,39 @@
 import { promises as fs } from 'fs';
 import { Sade } from 'sade';
-import { startService } from 'esbuild';
+import { startService, TransformOptions } from 'esbuild';
 import { CliOptions } from '../cli';
 
 export function addBuildCommand(prog: Sade, options: CliOptions) {
   prog
     .command('build <...entryPoints>', 'TODO', { default: true })
     .describe('Build your Spike project once')
+    .option("--dev, -d", "Create development-friendly bundle")
     .action(buildCommandHandler(options));
 }
 
 export function buildCommandHandler(options: CliOptions) {
-  return async (entryPoints: string) => {
+  return async (entryPoints: string, dev: boolean) => {
     const esbuild = await startService();
 
     try {
+      const transformOptions: TransformOptions = dev
+      ? {
+          sourcemap: false,
+          strict: false,
+          minify: false
+      }
+      : {
+        sourcemap: true,
+        strict: true,
+        minify: true
+      }
       const files = entryPoints.split(",");
       const outputBundles = await Promise.all(
         files
           .map(async file => await fs.readFile(file, { encoding: "utf-8" }))
           .map(async file => ({
             file: await file,
-            data: await esbuild.transform(await file)
+            data: await esbuild.transform(await file, transformOptions)
           })
         )
       );

@@ -26,4 +26,4 @@ export function watchCommandHandler(options: CliOptions) {
   }
 }
 
-export default addBuildCommand;
+export default addWatchCommand;

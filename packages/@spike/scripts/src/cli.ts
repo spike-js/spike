@@ -1,4 +1,5 @@
 import sade from "sade";
+import addWatchCommand from './commands/watch';
 import addBuildCommand from './commands/build';
 
 const CLI = sade('spike-scripts');
@@ -14,6 +15,7 @@ export interface CliOptions {
 
 export async function createCommandLine(options: CliOptions) {
   addBuildCommand(CLI, options);
+  addWatchCommand(CLI, options);
 
   return (argv: string[]) => CLI.parse(argv);
 };

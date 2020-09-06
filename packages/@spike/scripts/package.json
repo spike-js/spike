@@ -30,6 +30,9 @@
   "bugs": {
     "url": "https://github.com/spike-js/spike/issues"
   },
+  "peerDependencies": {
+    "jest": "^26.4.2"
+  },
   "dependencies": {
     "esbuild": "^0.6.30",
     "sade": "^1.7.3"
