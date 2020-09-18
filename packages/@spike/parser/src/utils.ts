@@ -19,6 +19,16 @@ export const getInternalNodeLocation = (
   },
 });
 
+export const getInternalNodeId = (
+  parentNode: any,
+  internalPath: InternalPath
+): string => {
+  const { nodeLocation } = parentNode;
+  const { start, end } = internalPath;
+
+  return `${nodeLocation}#${start.line}:${start.col}-${end.line}:${end.col}`;
+};
+
 // Returns a plain string representing the mimetype of the file
 export const getMime = (path: string): MimeTypes =>
   path.match(/\.htm(l)?$/)

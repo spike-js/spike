@@ -1,6 +1,6 @@
 import path from 'path';
 import { Graph } from '../parser';
-import { getInternalNodeLocation } from '../utils';
+import { getInternalNodeId, getInternalNodeLocation } from '../utils';
 import createGraphNode, { InternalPath, Node } from './base';
 
 /**
@@ -32,46 +32,28 @@ export async function handleJavascriptEntryNode(
  *
  * @param node
  * @param graph
+ * @param parentNode
+ * @param internalPath
  * @returns Promise<Node>
  */
 export async function getJavascriptNodeMeta(
   nodePath: any,
   graph: Graph,
+  parentNode?: any,
   internalPath?: InternalPath
 ): Promise<Node> {
   const node = await createGraphNode(nodePath);
 
   if (internalPath) {
+    node.id = getInternalNodeId(parentNode, internalPath);
+    node.type = 'internal';
+    node.mimeType = 'javascript';
     node.nodeLocation = internalPath;
+
+    parentNode?.children.push(node.id);
   }
 
   graph.push(node);
-
-  return node;
-}
-
-export async function getInternalJavascriptNodeMeta(
-  currentNode: any,
-  htmlNode: Node,
-  graph: Graph
-): Promise<Node> {
-  const internalNodePath: InternalPath = getInternalNodeLocation(
-    currentNode.location,
-    true
-  );
-
-  const internalNodeId: string = `${htmlNode.nodeLocation}#${internalNodePath.start.line}:${internalNodePath.start.col}-${internalNodePath.end.line}:${internalNodePath.end.col}`;
-
-  const node: Node = {
-    id: internalNodeId,
-    type: 'internal',
-    nodeLocation: internalNodePath,
-    mimeType: 'javascript',
-    children: [],
-  };
-
-  graph.push(node);
-  htmlNode.children.push(node.id);
 
   return node;
 }
@@ -116,10 +98,17 @@ export function getJavascriptNodesFromHtmlNode(
         }
 
         if (hasOnlyChildText) {
-          getInternalJavascriptNodeMeta(node, htmlNode, graph);
+          const internalLocation: InternalPath = getInternalNodeLocation(
+            node.location,
+            true
+          );
 
-          // TODO: get internal node, and push location string to parent
-          // console.log('INLINE SCRIPT LOCATION: ', internalLocation);
+          getJavascriptNodeMeta(
+            htmlNode.nodeLocation,
+            graph,
+            htmlNode,
+            internalLocation
+          );
         }
       } else if (Array.isArray(node.content) && node.content.length > 0) {
         walkToScriptTag(node.content, htmlNode, graph);
