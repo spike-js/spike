@@ -20,7 +20,7 @@
     "test": "npx lerna run test",
     "lint": "npx lerna run lint",
     "create": "npx lerna create",
-    "add": "npx lerna add",
+    "add-dep": "npx lerna add",
     "exec": "npx lerna exec"
   },
   "devDependencies": {
