@@ -1,7 +1,36 @@
-import { sum } from '../src';
+import parser from '../src/parser';
 
-describe('blah', () => {
-  it('works', () => {
-    expect(sum(1, 1)).toEqual(2);
+const mock = require('mock-fs');
+const path = require('path');
+
+describe('parser', () => {
+  const expectedRes = [
+    {
+      id: path.join(path.resolve(), 'index.html'),
+      nodeLocation: path.join(path.resolve(), 'index.html'),
+      type: 'external',
+      children: [],
+      mimeType: 'html',
+    },
+  ];
+
+  beforeEach(() => {
+    mock({
+      'index.html': `
+        <!DOCTYPE html>
+        <html>
+          <body>
+            foo
+          </body>
+        </html>
+      `,
+    });
+  });
+
+  afterEach(() => mock.restore());
+
+  it('parses a simple html file', async () => {
+    const res = await parser();
+    expect(res).toStrictEqual(expectedRes);
   });
 });
