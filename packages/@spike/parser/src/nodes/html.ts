@@ -3,6 +3,7 @@ import { default as reshapeParser } from 'reshape-parser';
 import { Node } from './base';
 import { Graph } from '../parser';
 import { getJavascriptNodesFromHtmlNode } from './javascript';
+import { getCssNodesFromHtmlNode } from './css';
 
 /**
  * Handles an HTML entry node
@@ -45,9 +46,9 @@ export async function getHtmlNodeMeta(
   const html_ast = reshapeParser(html);
 
   await getJavascriptNodesFromHtmlNode(htmlNode, graph)(html_ast);
+  await getCssNodesFromHtmlNode(htmlNode, graph)(html_ast);
 
   graph.push(htmlNode);
 
   return htmlNode;
 }
-

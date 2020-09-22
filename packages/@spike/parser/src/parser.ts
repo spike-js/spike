@@ -2,6 +2,7 @@ import { promises as fs } from 'fs';
 import createGraphNode, { Node } from './nodes/base';
 import { handleHtmlEntryNode } from './nodes/html';
 import { handleJavascriptEntryNode } from './nodes/javascript';
+import { handleCssEntryNode } from './nodes/css';
 import { getAllowedMimeTypes } from './utils';
 
 export type Graph = Node[];
@@ -24,6 +25,7 @@ export async function parser(opts?: ParserOptions): Promise<Graph> {
       .map(async node => node)
       .map(async node => await handleHtmlEntryNode(node, baseGraph))
       .map(async node => await handleJavascriptEntryNode(node, baseGraph))
+      .map(async node => await handleCssEntryNode(node, baseGraph))
   );
   // Final act of removing duplicates from the graph, flattening it entirely
   const flatGraph = resolvedGraph.reduce(dedupeGraph, baseGraph);
