@@ -1,30 +1,34 @@
 {
-  "private": true,
-  "name": "@spike/parser",
   "version": "0.1.0",
-  "description": "The parser for spike, that builds the AST of a project",
-  "author": "Chris D. MacRae <hello@chrisdmacrae.com>",
-  "homepage": "https://github.com/spike-js/spike#readme",
-  "license": "ISC",
-  "main": "src/index.ts",
-  "types": "dist/index.d.ts",
+  "license": "MIT",
+  "name": "@spike/parser",
+  "author": "Jesse Hoyos",
+  "module": "dist/parser.esm.js",
+  "main": "dist/index.js",
   "typings": "dist/index.d.ts",
-  "directories": {
-    "lib": "lib",
-    "test": "__tests__"
-  },
   "files": [
-    "lib"
+    "dist",
+    "src"
   ],
-  "publishConfig": {
-    "access": "public"
+  "engines": {
+    "node": ">=10"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/spike-js/spike.git"
+  "devDependencies": {
+    "@types/node": "^14.6.4"
   },
-  "scripts": {},
-  "bugs": {
-    "url": "https://github.com/spike-js/spike/issues"
+  "dependencies": {
+    "@spike/scripts": "^4.0.0-alpha",
+    "reshape-parser": "^1.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
   }
 }
