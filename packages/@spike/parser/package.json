@@ -13,11 +13,22 @@
   "engines": {
     "node": ">=10"
   },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build"
+  },
   "devDependencies": {
-    "@types/node": "^14.6.4"
+    "@types/node": "^14.6.4",
+    "husky": "^4.2.5",
+    "mock-fs": "^4.13.0",
+    "tsdx": "^0.13.3",
+    "tslib": "^2.0.1",
+    "typescript": "^4.0.2"
   },
   "dependencies": {
-    "@spike/scripts": "^4.0.0-alpha",
     "reshape-parser": "^1.0.0"
   },
   "husky": {
