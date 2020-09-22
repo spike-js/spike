@@ -20,7 +20,7 @@ export interface ParserOptions {
 
 export async function parser(opts?: ParserOptions): Promise<Graph> {
   // TODO: implement and propogate
-  const entryPoints = await fs.readdir(opts?.workingDirectory || process.cwd());
+  const entryPoints = await fs.readdir(opts?.workingDirectory ?? process.cwd());
   let baseGraph: Graph = await Promise.all(
     entryPoints
       .filter(getAllowedMimeTypes)
