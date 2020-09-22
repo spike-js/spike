@@ -4,13 +4,6 @@ import { handleHtmlEntryNode } from './nodes/html';
 import { handleJavascriptEntryNode } from './nodes/javascript';
 import { getAllowedMimeTypes } from './utils';
 
-/** NOTES:
- * 1. find all the files
- * 2. ignore the ones that need to be ignored
- * 3. classify each fileNode with a type, mime, and location
- * 4.
- */
-
 export type Graph = Node[];
 
 export interface ParserOptions {

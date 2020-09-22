@@ -3,6 +3,13 @@ import { Graph } from '../parser';
 import { getInternalNodeId, getInternalNodeLocation } from '../utils';
 import createGraphNode, { InternalPath, Node } from './base';
 
+/**
+ * Handles a css entry node
+ *
+ * @param node
+ * @param graph
+ * @returns Node
+ */
 export async function handleCssEntryNode(node: Promise<Node>, graph: Graph) {
   let cssNode = await node;
 
@@ -13,6 +20,16 @@ export async function handleCssEntryNode(node: Promise<Node>, graph: Graph) {
   return node;
 }
 
+/**
+ * Traverses a single html file's AST, creating its node and
+ * collecting its child nodes and adding them to the graph if necessary
+ *
+ * @param node
+ * @param graph
+ * @param parentNode
+ * @param internalPath
+ * @returns Promise<Node>
+ */
 export async function getCssNodeMeta(
   nodePath: string,
   graph: Graph
@@ -22,6 +39,14 @@ export async function getCssNodeMeta(
   return node;
 }
 
+/**
+ * Returns all script nodes from within an HTML node
+ * by walking the HTML node's AST and extracting them
+ *
+ * @param graph
+ * @param htmlNode
+ * @returns Function
+ */
 export function getCssNodesFromHtmlNode(
   htmlNode: Node,
   graph: Graph
