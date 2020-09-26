@@ -1,6 +1,6 @@
 import path from 'path';
 import { Graph } from '../parser';
-import { getInternalNodeId, getInternalNodeLocation } from '../utils';
+import { getInternalNodeId, getInternalNodeLocation, getMime } from '../utils';
 import createGraphNode, { InternalPath, Node } from './base';
 
 /**
@@ -71,19 +71,17 @@ export function getCssNodesFromHtmlNode(
         graph.push(styleNode);
       } else if (node.name === 'link') {
         const isCssLink =
-          node !== undefined &&
-          node.attrs !== undefined &&
-          node.attrs.href !== undefined &&
-          node.attrs.href[0] !== undefined &&
-          node.attrs.rel !== undefined &&
-          node.attrs.rel[0] !== undefined &&
-          node.attrs.rel[0].content === 'stylesheet';
+          node?.attrs?.href?.[0] !== 'undefined' &&
+          node?.attrs?.rel?.[0]?.content === 'stylesheet';
 
         if (isCssLink) {
           const fileName = node.attrs.href[0].content as string;
+          const isValidMimeType = getMime(fileName) === 'css';
 
-          getCssNodeMeta(fileName, graph);
-          htmlNode.children.push(path.resolve(fileName));
+          if (isValidMimeType) {
+            getCssNodeMeta(fileName, graph);
+            htmlNode.children.push(path.resolve(fileName));
+          }
         }
       } else if (Array.isArray(node.content) && node.content.length > 0) {
         walkToLinkTag(node.content, htmlNode, graph);
