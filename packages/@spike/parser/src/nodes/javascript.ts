@@ -1,6 +1,6 @@
 import path from 'path';
 import { Graph } from '../parser';
-import { getInternalNodeId, getInternalNodeLocation } from '../utils';
+import { getInternalNodeId, getInternalNodeLocation, getMime } from '../utils';
 import createGraphNode, { InternalPath, Node } from './base';
 
 /**
@@ -73,25 +73,20 @@ export function getJavascriptNodesFromHtmlNode(
   const walkToScriptTag = (tree: any, htmlNode: any, graph: Graph): void => {
     tree.forEach((node: any) => {
       if (node.name === 'script') {
-        const isFirstChildText =
-          node &&
-          node.content &&
-          node.content[0] &&
-          node.content[0].type === 'text';
+        const isFirstChildText = node?.content?.[0]?.type === 'text';
         const hasOnlyChildText = isFirstChildText && node.content.length === 1;
-        const hasAttrs =
-          node !== undefined &&
-          node.attrs !== undefined &&
-          node.attrs.src !== undefined &&
-          node.attrs.src[0] !== undefined;
+        const hasAttrs = node?.attrs?.src?.[0] !== undefined;
+        const isValidAttr =
+          node?.attrs?.src?.[0]?.type === 'text' &&
+          !node.attrs.src[0].content.startsWith('http');
 
-        if (hasAttrs) {
-          if (
-            node.attrs.src[0].type === 'text' &&
-            !node.attrs.src[0].content.startsWith('http')
-          ) {
-            const fileName = node.attrs.src[0].content as string;
+        if (hasAttrs && isValidAttr) {
+          const fileName = node.attrs.src[0].content as string;
+          const mimeType = getMime(fileName);
+          const isValidMimeType =
+            mimeType === 'javascript' || mimeType === 'typescript';
 
+          if (isValidMimeType) {
             getJavascriptNodeMeta(fileName, graph);
             htmlNode.children.push(path.resolve(fileName));
           }
