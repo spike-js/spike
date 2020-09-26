@@ -21,6 +21,7 @@
     "prepare": "tsdx build"
   },
   "devDependencies": {
+    "@types/jest": "^26.0.14",
     "@types/mock-fs": "^4.10.0",
     "@types/node": "^14.6.4",
     "husky": "^4.2.5",
