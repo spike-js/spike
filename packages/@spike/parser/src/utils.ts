@@ -38,6 +38,6 @@ export const getMime = (path: string): MimeTypes =>
     ? 'css'
     : path.match(/\.js$/)
     ? 'javascript'
-    : path.match(/\.ts$/)
+    : path.match(/\.ts[x]?$/)
     ? 'typescript'
     : 'unsupported';
