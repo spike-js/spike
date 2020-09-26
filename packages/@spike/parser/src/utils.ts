@@ -3,7 +3,8 @@ import { InternalPath, MimeTypes } from './nodes/base';
 
 // Returns only the files we handle for processing
 export const getAllowedMimeTypes = async (file: string) =>
-  !file.match(/\^.*/) && !(await fs.stat(file)).isDirectory();
+  file.match(/\.(html|css|js|ts|tsx)$/) !== null &&
+  !(await fs.stat(file)).isDirectory();
 
 export const getInternalNodeLocation = (
   node: any,
