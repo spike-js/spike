@@ -1,6 +1,6 @@
 # Spike
 
-A simple SSG, that doesn't scale, for the small projects that need a tool that just works, and works forever.
+A simple SSG, that doesn't scale for to enterprise, for the small projects that need a tool that just works, and works forever.
 
 ## Why?
 
