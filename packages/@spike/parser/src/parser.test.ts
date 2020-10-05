@@ -1,5 +1,6 @@
 import parser from './parser';
 
+const path = require('path');
 const mock = require('mock-fs');
 
 describe('parser', () => {
@@ -23,9 +24,9 @@ describe('parser', () => {
       Array [
         Object {
           "children": Array [],
-          "id": "/Users/christophermacrae/Code/spike-js/spike/packages/@spike/parser/index.html",
+          "id": "${path.resolve()}/index.html",
           "mimeType": "html",
-          "nodeLocation": "/Users/christophermacrae/Code/spike-js/spike/packages/@spike/parser/index.html",
+          "nodeLocation": "${path.resolve()}/index.html",
           "type": "external",
         },
       ]
@@ -58,17 +59,17 @@ describe('parser', () => {
       Array [
         Object {
           "children": Array [
-            "/Users/christophermacrae/Code/spike-js/spike/packages/@spike/parser/index.html#5:13-5:89",
-            "/Users/christophermacrae/Code/spike-js/spike/packages/@spike/parser/index.html#11:13-11:227",
+            "${path.resolve()}/index.html#5:13-5:89",
+            "${path.resolve()}/index.html#11:13-11:227",
           ],
-          "id": "/Users/christophermacrae/Code/spike-js/spike/packages/@spike/parser/index.html",
+          "id": "${path.resolve()}/index.html",
           "mimeType": "html",
-          "nodeLocation": "/Users/christophermacrae/Code/spike-js/spike/packages/@spike/parser/index.html",
+          "nodeLocation": "${path.resolve()}/index.html",
           "type": "external",
         },
         Object {
           "children": Array [],
-          "id": "/Users/christophermacrae/Code/spike-js/spike/packages/@spike/parser/index.html#5:13-5:89",
+          "id": "${path.resolve()}/index.html#5:13-5:89",
           "mimeType": "css",
           "nodeLocation": Object {
             "end": Object {
@@ -84,7 +85,7 @@ describe('parser', () => {
         },
         Object {
           "children": Array [],
-          "id": "/Users/christophermacrae/Code/spike-js/spike/packages/@spike/parser/index.html#11:13-11:227",
+          "id": "${path.resolve()}/index.html#11:13-11:227",
           "mimeType": "css",
           "nodeLocation": Object {
             "end": Object {
@@ -127,9 +128,9 @@ describe('parser', () => {
             "/test-1.css",
             "/test-2.css",
           ],
-          "id": "/Users/christophermacrae/Code/spike-js/spike/packages/@spike/parser/index.html",
+          "id": "${path.resolve()}/index.html",
           "mimeType": "html",
-          "nodeLocation": "/Users/christophermacrae/Code/spike-js/spike/packages/@spike/parser/index.html",
+          "nodeLocation": "${path.resolve()}/index.html",
           "type": "external",
         },
         Object {
@@ -175,18 +176,18 @@ describe('parser', () => {
       Array [
         Object {
           "children": Array [
-            "/Users/christophermacrae/Code/spike-js/spike/packages/@spike/parser/test.js",
-            "/Users/christophermacrae/Code/spike-js/spike/packages/@spike/parser/index.html#5:13-5:90",
+            "${path.resolve()}/test.js",
+            "${path.resolve()}/index.html#5:13-5:90",
             "/test-2.css",
           ],
-          "id": "/Users/christophermacrae/Code/spike-js/spike/packages/@spike/parser/index.html",
+          "id": "${path.resolve()}/index.html",
           "mimeType": "html",
-          "nodeLocation": "/Users/christophermacrae/Code/spike-js/spike/packages/@spike/parser/index.html",
+          "nodeLocation": "${path.resolve()}/index.html",
           "type": "external",
         },
         Object {
           "children": Array [],
-          "id": "/Users/christophermacrae/Code/spike-js/spike/packages/@spike/parser/index.html#5:13-5:90",
+          "id": "${path.resolve()}/index.html#5:13-5:90",
           "mimeType": "javascript",
           "nodeLocation": Object {
             "end": Object {
@@ -202,9 +203,9 @@ describe('parser', () => {
         },
         Object {
           "children": Array [],
-          "id": "/Users/christophermacrae/Code/spike-js/spike/packages/@spike/parser/test.js",
+          "id": "${path.resolve()}/test.js",
           "mimeType": "javascript",
-          "nodeLocation": "/Users/christophermacrae/Code/spike-js/spike/packages/@spike/parser/test.js",
+          "nodeLocation": "${path.resolve()}/test.js",
           "type": "external",
         },
         Object {
