@@ -1,5 +1,5 @@
 import { promises as fs } from 'fs';
-import { InternalPath, MimeTypes } from './nodes/base';
+import { InternalPath, MimeTypes, Node } from './nodes/base';
 
 // Returns only the files we handle for processing
 export const getAllowedMimeTypes = async (file: string) =>
@@ -7,21 +7,23 @@ export const getAllowedMimeTypes = async (file: string) =>
   !(await fs.stat(file)).isDirectory();
 
 export const getInternalNodeLocation = (
-  node: any,
+  location: any,
   inner?: boolean
 ): InternalPath => ({
   start: {
-    line: node.line,
-    col: node.col,
+    line: location.line,
+    col: location.col,
   },
   end: {
-    line: node.line,
-    col: node.col + (inner ? node.startInnerOffset : node.endInnerOffset),
+    line: location.line,
+    col:
+      location.col +
+      (inner ? location.startInnerOffset : location.endInnerOffset),
   },
 });
 
 export const getInternalNodeId = (
-  parentNode: any,
+  parentNode: Node,
   internalPath: InternalPath
 ): string => {
   const { nodeLocation } = parentNode;

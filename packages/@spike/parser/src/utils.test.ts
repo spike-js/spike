@@ -1,5 +1,71 @@
-import { getAllowedMimeTypes, getMime } from './utils';
+import { InternalPath, Node } from './nodes/base';
+import {
+  getAllowedMimeTypes,
+  getMime,
+  getInternalNodeLocation,
+  getInternalNodeId,
+} from './utils';
 import mockFs from 'mock-fs';
+
+describe('getInternalNodeId', () => {
+  it('should return a valid id string given a valid parent node and internal location', () => {
+    const idString = '/index.html#1:1-1:32';
+    const node: Node = {
+      id: '/index.html',
+      type: 'external',
+      nodeLocation: '/index.html',
+      mimeType: 'html',
+      children: [`${idString}`],
+      data: null,
+    };
+    const location: InternalPath = {
+      start: {
+        line: 1,
+        col: 1,
+      },
+      end: {
+        line: 1,
+        col: 32,
+      },
+    };
+
+    const output = getInternalNodeId(node, location);
+    expect(output).toBe(idString);
+  });
+});
+
+describe('getInternalNodeLocation', () => {
+  it('should return a valid InternalPath when provided a valid reshape node location', () => {
+    const reshapeNode = {
+      type: 'tag',
+      name: 'p',
+      attrs: {
+        class: [{ type: 'text', content: 'test', line: 1, col: 5 }],
+        'data-foo': [{ type: 'text', content: 'bar', line: 1, col: 18 }],
+      },
+      location: {
+        line: 1,
+        col: 1,
+        startOffset: 1,
+        startInnerOffset: 31,
+        endInnerOffset: 31,
+        endOffset: 35,
+      },
+    };
+    const internalNodeLocation: InternalPath = {
+      start: {
+        line: 1,
+        col: 1,
+      },
+      end: {
+        line: 1,
+        col: 32,
+      },
+    };
+    const output = getInternalNodeLocation(reshapeNode.location, true);
+    expect(output).toStrictEqual(internalNodeLocation);
+  });
+});
 
 describe('getAllowedMimeTypes', () => {
   afterEach(() => mockFs.restore());
