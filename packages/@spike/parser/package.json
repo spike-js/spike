@@ -1,0 +1,49 @@
+{
+  "version": "0.1.0",
+  "license": "MIT",
+  "name": "@spike/parser",
+  "author": "Jesse Hoyos",
+  "module": "dist/parser.esm.js",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build"
+  },
+  "devDependencies": {
+    "@types/find-up": "^4.0.0",
+    "@types/jest": "^26.0.14",
+    "@types/mock-fs": "^4.10.0",
+    "@types/node": "^14.6.4",
+    "husky": "^4.2.5",
+    "mock-fs": "^4.13.0",
+    "tsdx": "^0.13.3",
+    "tslib": "^2.0.1",
+    "typescript": "^4.0.2"
+  },
+  "dependencies": {
+    "find-up": "^5.0.0",
+    "reshape-parser": "^1.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  }
+}

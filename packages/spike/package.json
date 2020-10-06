@@ -22,5 +22,11 @@
   "scripts": {},
   "bugs": {
     "url": "https://github.com/spike-js/spike/issues"
+  },
+  "dependencies": {
+    "@types/node": "^14.6.3"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.14"
   }
 }

@@ -1,8 +1,8 @@
 {
   "private": true,
-  "name": "@spike/parser",
+  "name": "@spike/compiler",
   "version": "0.1.0",
-  "description": "The parser for spike, that builds the AST of a project",
+  "description": "The HTML, CSS, and JS compiler for spike",
   "author": "Chris D. MacRae <hello@chrisdmacrae.com>",
   "homepage": "https://github.com/spike-js/spike#readme",
   "license": "ISC",
@@ -26,5 +26,11 @@
   "scripts": {},
   "bugs": {
     "url": "https://github.com/spike-js/spike/issues"
+  },
+  "dependencies": {
+    "@types/node": "^14.6.3"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.14"
   }
 }
