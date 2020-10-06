@@ -11,7 +11,7 @@ if (existsSync(PKG_PATH)) {
 Thanks for installing @spike/scripts!
 ---
 
-This is a utility for building web modules for spike,
+This is a utility for building modules for spike,
 without worrying about maintaining a complicated build
 and test process. spike-scripts allows you to build
 spike-ready modules that will build (almost) forever.

@@ -1,6 +1,5 @@
-import parser from "./parser";
+import parser from './parser';
 
-parser()
-  .then(res => console.log("DEVELOPER BUILD\n", res, res.length));
+parser().then(res => console.log('DEVELOPER BUILD\n', res, res.length));
 
 export default parser;

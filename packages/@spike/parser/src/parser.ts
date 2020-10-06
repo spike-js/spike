@@ -24,13 +24,13 @@ export default async function parser(opts?: ParserOptions): Promise<Graph> {
   let baseGraph: Graph = await Promise.all(
     entryPoints
       .filter(getAllowedMimeTypes)
-      .map(async (entryPoint) => createGraphNode(entryPoint))
+      .map(async entryPoint => createGraphNode(entryPoint))
   );
   let resolvedGraph: Graph = await Promise.all(
     baseGraph
-      .map(async (node) => node)  
-      .map(async (node) => await handleHtmlEntryNode(node, baseGraph))
-      .map(async (node) => await handleJavascriptEntryNode(node, baseGraph))
+      .map(async node => node)
+      .map(async node => await handleHtmlEntryNode(node, baseGraph))
+      .map(async node => await handleJavascriptEntryNode(node, baseGraph))
   );
   // Final act of removing duplicates from the graph, flattening it entirely
   const flatGraph = resolvedGraph.reduce(dedupeGraph, baseGraph);
@@ -39,13 +39,19 @@ export default async function parser(opts?: ParserOptions): Promise<Graph> {
 }
 
 function dedupeGraph(graph: Graph, currentNode: Node): Graph {
-  const match_keys = graph.reduce((keys: number[], node: Node, index: number) => {
-    if (node.id === currentNode.id || node.location === currentNode.location) {
-      keys.push(index);
-    }
+  const match_keys = graph.reduce(
+    (keys: number[], node: Node, index: number) => {
+      if (
+        node.id === currentNode.id ||
+        node.location === currentNode.location
+      ) {
+        keys.push(index);
+      }
 
-    return keys;
-  }, []);
+      return keys;
+    },
+    []
+  );
 
   if (match_keys.length > 1) {
     for (let i = 1; i < match_keys.length; i++) {

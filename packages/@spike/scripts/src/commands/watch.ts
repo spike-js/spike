@@ -4,8 +4,8 @@ import { CliOptions } from '../cli';
 
 export function addWatchCommand(prog: Sade, options: CliOptions) {
   prog
-    .command('build <entryPoints>', 'TODO', { default: true })
-    .describe('Build your Spike project once')
+    .command('watch <entryPoints>', 'TODO', { default: true })
+    .describe('Build your Spike project once, and then rebuild on changes')
     .action(watchCommandHandler(options));
 }
 

@@ -25,7 +25,7 @@
   },
   "scripts": {
     "postinstall": "node build/postinstall.js",
-    "build": "npx esbuild src/*.ts --bundle --outdir=build --platform=node --target=es6 --format=cjs",
+    "build": "npx esbuild src/*.ts --bundle --outdir=build --platform=node --format=cjs",
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "bugs": {
@@ -35,7 +35,15 @@
     "jest": "^26.4.2"
   },
   "dependencies": {
+    "@rollup/plugin-auto-install": "^2.1.0",
+    "@rollup/plugin-commonjs": "^15.1.0",
+    "@rollup/plugin-node-resolve": "^9.0.0",
+    "@rollup/plugin-typescript": "^6.0.0",
+    "@rollup/plugin-virtual": "^2.0.3",
+    "@rollup/plugin-wasm": "^5.1.0",
     "esbuild": "^0.6.30",
+    "rollup": "^2.28.2",
+    "rollup-plugin-esbuild": "^2.5.0",
     "sade": "^1.7.3"
   }
 }
